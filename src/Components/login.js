@@ -6,7 +6,8 @@ class Login extends React.Component {
     super(props)
     this.state={
       email:"",
-      password:''
+      password:'',
+      emailErr:''
     }
 
     this.Change=this.Change.bind(this)
@@ -25,6 +26,7 @@ class Login extends React.Component {
             <label  className="form-label">Email address</label> <br></br>
             <input type="email" className="form-control-sm" name="email" value={this.state.email} onChange={this.Change} />
           </div>
+          <span>{this.state.emailErr}</span>
           <div className="mb-3">
             <label  className="form-label">Password</label> <br></br>
             <input type="password" className=" form-control-sm" name="password" value={this.state.password} onChange={this.Change} />
@@ -39,17 +41,18 @@ class Login extends React.Component {
   }
 
 
-  Click(){
-    if(this.state.password==''){
+  Click(event){
+    event.preventDefault()
+    if(this.state.email==='')
+    {
       this.setState({
-       
-      }) 
+        emailErr:"please enter email"
+      })
     }
-    
   }
 
   Change(event){
-    console.log(event.target)
+    // console.log(event)
     this.setState({
       [event.target.name]:event.target.value
     })
