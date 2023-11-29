@@ -36,15 +36,25 @@ function Login (){
       else if(!value.email){
         setValue({...value,emailErr:"please enter email"})
       }
+      else if(!validateEmail(value.email)){
+        setValue({...value,emailErr:"please enter valid email"})
+      }
       else{
             console.log("success")
       }
     }
 
 
+    function validateEmail(email) {
+      var valid =  /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      return valid.test(email);
+    }
+
+
+
     function validatePassword(password) {
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
-      return re.test(password);
+      var valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+      return valid.test(password);
     }
     
   return(
@@ -57,7 +67,7 @@ function Login (){
               <span style={{color:"red"}}>{value.emailErr}</span>
               <div className="mb-3">
                 <label  className="form-label">Password</label> <br></br>
-                <input type="password" className=" form-control-sm width" name="password" value={value.password} onChange={updateChange}/>
+                <input type="password" className=" form-control-sm width" placeholder="minimum 8 characters" name="password" value={value.password} onChange={updateChange}/>
                 </div>
 
                 <div style={{color:"red"}}>{value.passwordErr}</div>
