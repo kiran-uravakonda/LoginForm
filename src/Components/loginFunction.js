@@ -8,7 +8,7 @@ function Login (){
         checkErr:''
     })
  function updateChange(event){
-        // console.log(event.target)
+        // console.log(event.target.value.length)
         setValue({
             ...value,
             [event.target.name]:event.target.value
@@ -30,6 +30,9 @@ function Login (){
       else if(!value.password){
         setValue({...value,passwordErr:"please enter password"})
       }
+      else if(!validatePassword(value.password)){
+        setValue({...value,passwordErr:"please enter valid password"})
+      }
       else if(!value.email){
         setValue({...value,emailErr:"please enter email"})
       }
@@ -37,12 +40,19 @@ function Login (){
             console.log("success")
       }
     }
+
+
+    function validatePassword(password) {
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+      return re.test(password);
+    }
+    
   return(
     <div className='test'>
             <form>
               <div className="mb-3">
                 <label  className="form-label">Email address</label> <br></br>
-                <input type="email" className="form-control-sm width" name="email" value={value.email} onChange={updateChange}/>
+                <input type="email" className="form-control-sm width" placeholder="abc@gmail.com" name="email" value={value.email} onChange={updateChange}/>
               </div>
               <span style={{color:"red"}}>{value.emailErr}</span>
               <div className="mb-3">
