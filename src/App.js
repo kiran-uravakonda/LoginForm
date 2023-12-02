@@ -1,4 +1,5 @@
-import Login from './Components/login'
+import './App.css'
+import Login from './Components/loginFunction'
 function App() {
   return (
     <div>

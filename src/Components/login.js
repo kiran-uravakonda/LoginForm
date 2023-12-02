@@ -6,9 +6,10 @@ class Login extends React.Component {
     super(props)
     this.state={
       email:"",
-      password:''
+      password:'',
+      emailErr:''
     }
-
+    
     this.Change=this.Change.bind(this)
     this.Click=this.Click.bind(this)
    
@@ -18,65 +19,74 @@ class Login extends React.Component {
  
 
   render() {
+    let {email,password,emailErr}=this.state
     return (
+      
       <div className='test'>
         <form>
           <div className="mb-3">
             <label  className="form-label">Email address</label> <br></br>
-            <input type="email" className="form-control-sm" name="email" value={this.state.email} onChange={this.Change} />
+            <input type="email" className="form-control-sm" name="email" value={email} onChange={this.Change} />
           </div>
+          <span style={{color:"red"}}>{emailErr}</span>
           <div className="mb-3">
             <label  className="form-label">Password</label> <br></br>
-            <input type="password" className=" form-control-sm" name="password" value={this.state.password} onChange={this.Change} />
+            <input type="password" className=" form-control-sm" name="password" value={password} onChange={this.Change} />
            
           </div>
+          
           <button type="submit" className="btn btn-primary" onClick={this.Click}>Submit</button>
         </form>
       </div>
+      
 
     )
     
   }
 
 
-  Click(){
-    if(this.state.password==''){
-      this.setState({
-       
-      }) 
-    }
-    
+  Click(event){
+    event.preventDefault()
+   this.Validate()
+   
   }
 
+  Validate(){
+   
+    if(this.state.email==='')
+    {
+      this.setState({
+        emailErr:"please enter email"
+      })
+    }
+
+   else if(!this.validateEmail(this.state.email)){
+    this.setState({
+      emailErr:"please enter a valid email address"
+    })
+   }
+
+
+
+  }
+
+   validateEmail(email) {
+    var re =  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    return re.test(email);
+  }
+  
+
   Change(event){
-    console.log(event.target)
+    // console.log(event)
     this.setState({
       [event.target.name]:event.target.value
     })
    
   }
 
-  // EmailChange(event){
-  //   // console.log(event)
-  //   console.log(event.target)
-  //   this.setState({
-   
-  //   email:event.target.value,
 
-    
-  //   })
-  //  }
-
-
-  //  PasswordChange(event){
-  //   console.log(event.target)
-  //   this.setState({
-  //     password:event.target.value
-  //   })
-  //  }
-
-
-  
 }
+
+
 
 export default Login;
